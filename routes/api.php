@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -27,7 +28,17 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/password/email', [AuthController::class, 'sendResetLinkEmail'])->name('api.password.email');
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'userDetails']);
     Route::get('/logout', [UserController::class, 'logOut']);
+
+    Route::get('/chat_create', [ChatController::class, 'index']);
+    Route::post('/chat_store', [ChatController::class, 'store']);
+
+    Route::get('/chat_show', [ChatController::class, 'show']);
+
+
+
+
+    // Route::apiResource('chat', ChatController::class)->only(['index', 'store', 'show']);
 });
