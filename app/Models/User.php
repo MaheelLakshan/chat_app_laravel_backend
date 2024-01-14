@@ -35,6 +35,11 @@ class User extends Authenticatable
     ];
 
 
+    public function userLogins()
+    {
+        return $this->hasMany(UserLogin::class, 'user_id');
+    }
+
     public function chats()
     {
         return $this->hasMany(Chat::class, 'created_by');
